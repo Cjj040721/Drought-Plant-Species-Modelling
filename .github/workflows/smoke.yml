@@ -1,0 +1,39 @@
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  offline-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install package
+        run: pip install -e .
+      - name: Run offline simulation
+        run: drought-simulate --offline --replicates 2 --output outputs-ci
+      - name: Validate simulation outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import pandas as pd
+          metadata = json.loads(Path('outputs-ci/metadata.json').read_text())
+          summary = pd.read_csv('outputs-ci/richness_summary.csv')
+          assert metadata['replicates_per_richness'] == 2
+          assert metadata['simulated_communities'] == 10
+          assert metadata['climate_source'] == 'Deterministic synthetic climate'
+          assert len(summary) == 5
+          assert summary['biomass_retention_mean'].between(0, 1).all()
+          assert summary['replicates'].eq(2).all()
+          assert Path('outputs-ci/simulation_report.png').is_file()
+          print('Offline drought simulations and uncertainty summaries verified.')
+          PY

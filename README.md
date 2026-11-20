@@ -10,6 +10,7 @@ A 2026 reimplementation inspired by the 2023 MCM/ICM Problem A project
 [![Simulation](https://img.shields.io/badge/Dynamics-Lotka--Volterra-6E56CF)](#model)
 [![Analysis](https://img.shields.io/badge/Analysis-Monte_Carlo_%2B_95%25_CI-2AA887)](#verified-beijing-demo)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](#quickstart)
+[![Smoke](https://github.com/Cjj040721/Drought-Plant-Species-Modelling/actions/workflows/smoke.yml/badge.svg)](https://github.com/Cjj040721/Drought-Plant-Species-Modelling/actions/workflows/smoke.yml)
 
 [Quickstart](#quickstart) · [Model](#model) · [Verified Demo](#verified-beijing-demo) · [Evidence Boundaries](#evidence-boundaries)
 
